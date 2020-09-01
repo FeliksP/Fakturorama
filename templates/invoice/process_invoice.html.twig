@@ -1,10 +1,7 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-    {% include 'invoice/_incl_invoice_styles.html.twig'  %}
+    {% include '_includes/invoice_styles.html.twig'  %}
 
-    <script>
-      
-    </script>
     <script type = "text/javascript">
         function delete_invoice_item(product_name) {
             return confirm('{{ 'Are you sure to delete this product'|trans }}: ' + product_name + '?');

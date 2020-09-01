@@ -14,12 +14,14 @@ use App\Utils\Flasher;
 class InvoiceController extends AbstractController {
 
     /**
-     * @Route("/invoice-list", name="invoice_list")
+     * @Route("/invoice-list/{page}", defaults={"page": "1"}, name="invoice_list")
      */
-    public function invoiceList() {
+    public function invoiceList($page) {
         $entityManager = $this->getDoctrine()->getManager();
         $repo = $entityManager->getRepository(Invoices::class);
-        $invoicesObj = $repo->getXLatestRecords(0, 10);
+        // $invoicesObj = $repo->getXLatestRecords(0, 10);
+
+        $invoicesObj = $repo->findAllPaginated($page);
 
         $formInvoiceObj = $this->createForm(InvoiceType::class);
 
@@ -49,21 +51,24 @@ class InvoiceController extends AbstractController {
      * @Route("/edit_invoice", name="edit_invoice", methods={"POST"})
      */
     public function editInvoice(Request $request, Flasher $flasher) {
+        $success = false;
         $invoice_id = $request->request->get('edit_invoice_id');
         if (isset($invoice_id)) {
-
             $entityManager = $this->getDoctrine()->getManager();
             $repo = $entityManager->getRepository(Invoices::class);
             $invoiceObj = $repo->find($invoice_id);
+            if (isset($invoiceObj)) {
+                $invoiceObj = $this->processInvoiceDataFromForm($request, $invoiceObj, true);
 
-            $invoiceObj = $this->processInvoiceDataFromForm($request, $invoiceObj, true);
-
-            $entityManager->persist($invoiceObj);
-            $entityManager->flush();
-
+                $entityManager->persist($invoiceObj);
+                $entityManager->flush();
+                $success = true;
+            }
+        }
+        if ($success) {
             $flasher->flashSuccess('Invoice data updated.');
         } else {
-            $flasher->flashError('Failed to update the invoice!');
+            $success = $flasher->flashError('Failed to update the invoice!');
         }
         return $this->redirectToRoute("invoice_list");
     }
@@ -87,13 +92,28 @@ class InvoiceController extends AbstractController {
     }
 
     /**
-     * @Route("/delete-invoice/{id}", name="delete_invoice")
+     * @Route("/delete-invoice", name="delete_invoice", methods={"POST"})
      */
-    public function deleteInvoice(Invoices $invoiceObj, Flasher $flasher) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($invoiceObj);
-        $entityManager->flush();
-        $flasher->flashSuccess('Invoice deleted');
+    public function deleteInvoice(Request $request, Flasher $flasher) {
+        $success = false;
+        $invoice_id = $request->request->get('delete_invoice_id');
+        if (isset($invoice_id)) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $repo = $entityManager->getRepository(Invoices::class);
+            $invoiceObj = $repo->find($invoice_id);
+
+            if (isset($invoiceObj)) {
+                $entityManager->remove($invoiceObj);
+                $entityManager->flush();
+                $success = true;
+            }
+        }
+        if ($success) {
+            $flasher->flashSuccess('Invoice deleted');
+        } else {
+            $success = $flasher->flashError('Failed to delete the invoice!');
+        }
+
         return $this->redirectToRoute("invoice_list");
     }
 

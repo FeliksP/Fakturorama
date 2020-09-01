@@ -8,6 +8,7 @@ Actions : Funkcje
 Add New Invoice : Dodaj nową fakturę
 Settings : Ustawienia
 Add Invoice : Dodaj fakturę
+Delete Invoice : Skasuj fakturę
 Cancel : Anuluj
 Save : Zapisz
 Add : Dodaj
@@ -15,7 +16,8 @@ Delete : Usuń
 Edit : Edytuj
 Print: Drukuj
 Value: Wartość
-Are you sure to delete invoice number : Czy na pewno usunąć fakturę o numerze
+Are you sure to delete this invoice : Czy na pewno usunąć fakturę o tym numerze
+This action cannot be undone : Nie ma możliwości odwrócenie tej akcji.
 Process : Przetwarzaj
 Edit Invoice : Edycja faktury
 #items
@@ -53,6 +55,7 @@ New invoice recorded. : Nowa faktura została zarejestrowana.
 New invoice item recorded. : Nowa pozycja została zarejestrowana.
 Changes have been saved! : Zmiany zostały zachowane!
 Item updated. : Pozycja została zaktualizowna.
+Invoice data updated. : Dane faktury zostały zaktualizowane.
 Invoice deleted : Faktura została skasowana.
 Invoice item deleted : Pozycja została skasowana.
 
@@ -64,3 +67,4 @@ Default Currency cannot be blank : Waluta nie może być pusta
 Company Account cannot be blank : Pole NIP nie może być puste
 Non-numeric values provided when numeric expected! : Wprowadzono nie numeryczne wartości!
 Failed to update the invoice item! : Błąd w aktalizacji pozycji faktury!
+Failed to delete the invoice! : Błąd - faktura nie została skasowana!
