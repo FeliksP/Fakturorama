@@ -20,7 +20,7 @@ class InvoiceController extends AbstractController {
         $entityManager = $this->getDoctrine()->getManager();
         $repo = $entityManager->getRepository(Invoices::class);
         // $invoicesObj = $repo->getXLatestRecords(0, 10);
-
+        $recordCountInt  = $repo->countAllRecords();
         $invoicesObj = $repo->findAllPaginated($page);
 
         $formInvoiceObj = $this->createForm(InvoiceType::class);
@@ -28,7 +28,8 @@ class InvoiceController extends AbstractController {
 
         return $this->render('invoice/crud_table.html.twig', [
                     'invoicesObj' => $invoicesObj,
-                    'formInvoiceObj' => $formInvoiceObj
+                    'formInvoiceObj' => $formInvoiceObj,
+                    'recordCountInt' => $recordCountInt,
         ]);
     }
 

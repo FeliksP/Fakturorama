@@ -26,7 +26,7 @@
         }
 
 
-    </script>
+    </script>  
 {% endblock %}
 {% block body %}
     {{ parent()}}
@@ -77,7 +77,7 @@
                                 {% endfor %}
                                 <td class="text-right"> <a href="{{  path('process_invoice', {'id':invoiceObj.id} )  }}" >{{ sum |number_format(2, '.',' ')  }}</a> </td> 
                                 <td>
-                                    <a href="#editInvoiceModal" class="edit" onclick="return load_modal('{{invoiceObj.id}}')" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Edit'|trans  }}">&#xE254;</i></a>
+                                    <a href="#editInvoiceModal" class="edit" onclick="return load_modal('{{invoiceObj.id}}');" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Edit'|trans  }}">&#xE254;</i></a>
                                 </td>   
                                 <td>
                                     <a href="{{  path('process_invoice', {'id':invoiceObj.id} )  }}" class="process"><i class="material-icons" data-toggle="tooltip" title="{{ 'Process'|trans  }}">&#xE8FF;</i></a>
@@ -87,14 +87,15 @@
                                 </td>
 
                                 <td>
-                                 <!--  <a href="{{  path('delete_invoice', {'id':invoiceObj.id} )  }}" onclick="return delete_invoice('{{invoiceObj.number }}');"  class="delete" ><i class="material-icons" data-toggle="tooltip" title="{{ 'Delete'|trans  }}">&#xE872;</i></a> -->
-                                    <a href="#deleteInvoiceModal" class="delete" onclick="return delete_invoice('{{invoiceObj.id}}')" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Delete'|trans  }}">&#xE872;</i></a>
+                                 
+                                    <a href="#deleteInvoiceModal" class="delete" onclick="return delete_invoice('{{invoiceObj.id}}');" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Delete'|trans  }}">&#xE872;</i></a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                  
                 </table>
+                        <p id="RecordCount"> {{ 'Total Record Count'|trans }}: {{ recordCountInt }}</p>
             </div>
         </div>    
     </div>
@@ -114,7 +115,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{ 'Buyer Tax ID'|trans  }}</label>
-                            <input type="text" class="form-control" required name="buyerTaxId" max="15">
+                            <input type="text" class="form-control" required id="buyerTaxId"  name="buyerTaxId" max="15" >
                         </div>
                         <div class="form-group">
                             <label>{{ 'Buyer Address'|trans  }} </label>
@@ -146,7 +147,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{ 'Buyer Tax ID'|trans  }}</label>
-                            <input type="text" class="form-control" required id="edit_buyerTaxId" name="edit_buyerTaxId" max="15" placeholder="000-000-00-0">
+                            <input type="text" class="form-control" required id="edit_buyerTaxId" name="edit_buyerTaxId" max="15">
                         </div>
                         <div class="form-group">
                             <label>{{ 'Buyer Address'|trans  }}</label>

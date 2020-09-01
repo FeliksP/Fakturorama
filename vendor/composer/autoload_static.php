@@ -153,6 +153,7 @@ class ComposerStaticInitf4489826c7426cadb45f2fd36e0abb60
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
             'Doctrine\\Bundle\\FixturesBundle\\' => 31,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
+            'DAMA\\DoctrineTestBundle\\' => 24,
         ),
         'A' => 
         array (
@@ -575,6 +576,10 @@ class ComposerStaticInitf4489826c7426cadb45f2fd36e0abb60
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
         ),
+        'DAMA\\DoctrineTestBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle',
+        ),
         'App\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
@@ -602,8 +607,20 @@ class ComposerStaticInitf4489826c7426cadb45f2fd36e0abb60
         'App\\Repository\\InvoiceItemsRepository' => __DIR__ . '/../..' . '/src/Repository/InvoiceItemsRepository.php',
         'App\\Repository\\InvoicesRepository' => __DIR__ . '/../..' . '/src/Repository/InvoicesRepository.php',
         'App\\Repository\\SystemRepository' => __DIR__ . '/../..' . '/src/Repository/SystemRepository.php',
+        'App\\Tests\\InvoicesTest' => __DIR__ . '/../..' . '/tests/InvoicesTest.php',
         'App\\Utils\\Flasher' => __DIR__ . '/../..' . '/src/Utils/Flasher.php',
         'Collator' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Collator.php',
+        'DAMA\\DoctrineTestBundle\\DAMADoctrineTestBundle' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/DAMADoctrineTestBundle.php',
+        'DAMA\\DoctrineTestBundle\\DependencyInjection\\Configuration' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/DependencyInjection/Configuration.php',
+        'DAMA\\DoctrineTestBundle\\DependencyInjection\\DAMADoctrineTestExtension' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/DependencyInjection/DAMADoctrineTestExtension.php',
+        'DAMA\\DoctrineTestBundle\\DependencyInjection\\DoctrineTestCompilerPass' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/DependencyInjection/DoctrineTestCompilerPass.php',
+        'DAMA\\DoctrineTestBundle\\Doctrine\\Cache\\StaticArrayCache' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/Doctrine/Cache/StaticArrayCache.php',
+        'DAMA\\DoctrineTestBundle\\Doctrine\\DBAL\\PostConnectEventListener' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/Doctrine/DBAL/PostConnectEventListener.php',
+        'DAMA\\DoctrineTestBundle\\Doctrine\\DBAL\\StaticConnection' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/Doctrine/DBAL/StaticConnection.php',
+        'DAMA\\DoctrineTestBundle\\Doctrine\\DBAL\\StaticConnectionFactory' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/Doctrine/DBAL/StaticConnectionFactory.php',
+        'DAMA\\DoctrineTestBundle\\Doctrine\\DBAL\\StaticDriver' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/Doctrine/DBAL/StaticDriver.php',
+        'DAMA\\DoctrineTestBundle\\PHPUnit\\PHPUnitExtension' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/PHPUnit/PHPUnitExtension.php',
+        'DAMA\\DoctrineTestBundle\\PHPUnit\\PHPUnitListener' => __DIR__ . '/..' . '/dama/doctrine-test-bundle/src/DAMA/DoctrineTestBundle/PHPUnit/PHPUnitListener.php',
         'Doctrine\\Bundle\\DoctrineBundle\\Command\\CreateDatabaseDoctrineCommand' => __DIR__ . '/..' . '/doctrine/doctrine-bundle/Command/CreateDatabaseDoctrineCommand.php',
         'Doctrine\\Bundle\\DoctrineBundle\\Command\\DoctrineCommand' => __DIR__ . '/..' . '/doctrine/doctrine-bundle/Command/DoctrineCommand.php',
         'Doctrine\\Bundle\\DoctrineBundle\\Command\\DropDatabaseDoctrineCommand' => __DIR__ . '/..' . '/doctrine/doctrine-bundle/Command/DropDatabaseDoctrineCommand.php',

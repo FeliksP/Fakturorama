@@ -151,7 +151,6 @@ class Invoices {
 
         $repo = $entityManager->getRepository(Invoices::class);
         $lastNumberInvoiceObj = $repo->getXLatestRecords(0, 1);
-        dump($lastNumberInvoiceObj);
         $thisYear = date("Y");
 
         if (empty($lastNumberInvoiceObj)) { // in that case add a new record

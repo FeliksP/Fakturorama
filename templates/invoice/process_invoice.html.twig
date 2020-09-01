@@ -49,8 +49,8 @@
                             <th>#</th>
                             <th>{{ 'Product'|trans  }}</th>
                             <th>{{ 'Quantity'|trans  }}</th>
-                            <th>{{ 'Price'|trans  }} </th>
-                            <th>{{ 'Total'|trans  }}</th>
+                            <th class="text-right" >{{ 'Price'|trans  }} </th>
+                            <th class="text-right" >{{ 'Total'|trans  }}</th>
                             <th>{{ 'Actions'|trans  }}</th>
                         </tr>
                     </thead>
@@ -62,8 +62,8 @@
                                 <td>{{ loop.index}} </td>
                                 <td id="product_{{invoiceItemObj.id}}">{{ invoiceItemObj.product }}</td>
                                 <td id="quantity_{{invoiceItemObj.id}}">{{ invoiceItemObj.quantity }}</td>
-                                <td id="price_{{invoiceItemObj.id}}">{{ (invoiceItemObj.price / 100) |number_format(2, '.',' ') }}</td>
-                                <td id="total_{{invoiceItemObj.id}}">{{ (invoiceItemObj.total / 100) |number_format(2, '.',' ') }}</td>
+                                <td class="text-right" id="price_{{invoiceItemObj.id}}">{{ (invoiceItemObj.price / 100) |number_format(2, '.',' ') }}</td>
+                                <td class="text-right"  id="total_{{invoiceItemObj.id}}">{{ (invoiceItemObj.total / 100) |number_format(2, '.',' ') }}</td>
                                     
                                 <td>
                                     <a href="#editInvoiceItemModal" class="edit" onclick="return load_modal('{{invoiceItemObj.id}}')" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Edit'|trans  }}">&#xE254;</i></a>

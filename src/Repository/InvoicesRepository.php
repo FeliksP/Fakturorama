@@ -14,10 +14,12 @@ use Knp\Component\Pager\PaginatorInterface;
  * @method Invoices[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class InvoicesRepository extends ServiceEntityRepository {
-private  $paginator;
+
+    private $paginator;
+
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator) {
         parent::__construct($registry, Invoices::class);
-        
+
         $this->paginator = $paginator;
     }
 
@@ -40,12 +42,21 @@ private  $paginator;
     public function findAllPaginated($page) {
 
         $query = $this->createQueryBuilder('i')
-        ->leftJoin('i.Item', 'ii')
-        ->addSelect('ii')
-        ->orderBy('i.Number', 'DESC');
-        
+                ->leftJoin('i.Item', 'ii')
+                ->addSelect('ii')
+                ->orderBy('i.Number', 'DESC');
+
         $pagination = $this->paginator->paginate($query, $page, 10);
         return $pagination;
+    }
+
+    public function countAllRecords() {
+        $count = $this->createQueryBuilder('i')
+                ->select('count(i.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+
+        return $count;
     }
 
     // /**

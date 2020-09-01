@@ -54,6 +54,9 @@ class InvoiceItemsFixtures extends Fixture implements DependentFixtureInterface 
         yield [9, 'Klawiatura', 6, 4300];
         yield [10, 'Pakiet MS Office', 20, 35000];
         yield [11, 'Windows 10', 20, 65000];
+        yield [12, 'Windows 10', 1, 65000];
+        yield [12, 'Drukarka', 1, 79200];
+        yield [13, 'Mysz', 4, 3900];
     }
 
 }
