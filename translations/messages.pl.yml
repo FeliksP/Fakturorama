@@ -1,0 +1,66 @@
+Manage Invoices : Zarządzanie fakturami
+Number : Numer
+Issue Date: Data wystawienia
+Buyer: Nabywca
+Buyer Tax ID: Numer NIP
+Buyer Address : Adres kontrahenta
+Actions : Funkcje
+Add New Invoice : Dodaj nową fakturę
+Settings : Ustawienia
+Add Invoice : Dodaj fakturę
+Cancel : Anuluj
+Save : Zapisz
+Add : Dodaj
+Delete : Usuń
+Edit : Edytuj
+Print: Drukuj
+Value: Wartość
+Are you sure to delete invoice number : Czy na pewno usunąć fakturę o numerze
+Process : Przetwarzaj
+Edit Invoice : Edycja faktury
+#items
+Edit Items : Edytuj pozycje
+Add New Item : Dodaj pozycję
+Back : Powrót
+Product : Produkt
+Quantity : Ilość
+Price : Cena 
+Total : Suma
+Are you sure to delete this product : Czy na pewno usunąć pozycję dotyczącą produktu
+Add Item: Dodaj pozycję
+Edit Item : Edytuj pozycję
+Tax Amount: Wartość podatku
+#print
+Invoice : Faktura
+Tax ID : NIP
+Seller: Sprzedawca
+Account Number: Numer konta
+Order summary: Szczegóły zamówienia
+Item : Pozycja
+Total net : Wartość netto
+VAT Tax : Podatek VAT
+Total gross : Wartość brutto
+#system settings
+System Settings : Ustawienia systemowe
+Company Name : Nazwa firmy
+Company Address : Adres firmy
+Company Tax ID : NIP firmy
+Default Currency : Domyślna waluta
+Company Account : Numer konta
+Default VAT : Domyślna stawka VAT
+#messages
+New invoice recorded. : Nowa faktura została zarejestrowana.
+New invoice item recorded. : Nowa pozycja została zarejestrowana.
+Changes have been saved! : Zmiany zostały zachowane!
+Item updated. : Pozycja została zaktualizowna.
+Invoice deleted : Faktura została skasowana.
+Invoice item deleted : Pozycja została skasowana.
+
+#errors
+Name cannot be blank : Nazwa nie może być pusta
+Address cannot be blank : Pole Adres nie może być puste
+Tax ID cannot be blank : Pole NIP nie może być puste
+Default Currency cannot be blank : Waluta nie może być pusta
+Company Account cannot be blank : Pole NIP nie może być puste
+Non-numeric values provided when numeric expected! : Wprowadzono nie numeryczne wartości!
+Failed to update the invoice item! : Błąd w aktalizacji pozycji faktury!

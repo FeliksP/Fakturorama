@@ -1,0 +1,114 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="/css/print.css">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="invoice-title">
+                    <h2>{{ 'Invoice'|trans }}</h2><h3 class="pull-right"># {{ invoiceObj.number }}</h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            <strong>{{ 'Buyer'|trans }}</strong><br>
+                            {{ invoiceObj.buyerName }}<br>
+                            {{ invoiceObj.buyerAddress }}<br>
+                            {{ 'Tax ID'|trans }}: {{ invoiceObj.buyerTaxID }}<br>
+
+                        </address>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <address>
+                            <strong>{{ 'Seller'|trans }}</strong><br>
+                            {{ systemObj.CompanyName}}<br>
+                            {{ systemObj.CompanyAddress}}<br>
+                            {{ 'Tax ID'|trans }}: {{ systemObj.CompanyTaxID}}<br>
+
+                        </address>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            <strong>{{ 'Issue Date'|trans }}</strong><br>
+                            {{ invoiceObj.IssueDate|date("Y-m-d") }}<br><br>
+                        </address>
+                    </div>
+                    <div class="col-xs-6 text-right">
+
+
+                        <address>
+                            <strong>{{ 'Account Number'|trans }}</strong><br>
+                            {{ systemObj.CompanyAccount}}<br>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>{{ 'Order summary'|trans }}</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td><strong>{{ 'Item'|trans }}</strong></td>
+                                        <td class="text-center"><strong>{{ 'Price'|trans }}</strong></td>
+                                        <td class="text-center"><strong>{{ 'Quantity'|trans }}</strong></td>
+                                        <td class="text-right"><strong>{{ 'Total'|trans }}</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                    {% set sum = 0 %}
+                                    {%  for invoiceItemObj in invoiceItemsObj %}
+                                        {% set sum = sum + invoiceItemObj.Total / 100 %}   
+                                        <tr>
+                                            <td>{{ invoiceItemObj.product  }}</td>
+                                            <td class="text-right"> {{ (invoiceItemObj.price / 100) |number_format(2, '.',' ') }} {{ systemObj.DefaultCurrency}}</td>
+                                            <td class="text-center">{{ invoiceItemObj.quantity }}</td>
+                                            <td class="text-right"> {{ (invoiceItemObj.Total / 100) |number_format(2, '.',' ') }} {{ systemObj.DefaultCurrency}}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                               
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-center"><strong>{{ 'Total net'|trans }}</strong></td>
+                                        <td class="thick-line text-right">{{ sum|number_format(2, '.',' ') }} {{ systemObj.DefaultCurrency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-center"><strong>{{ 'VAT Tax'|trans }} ({{ systemObj.DefaultVat }}%)</strong></td>
+                                        {% set vat  = sum * systemObj.DefaultVat / 100 %}
+                                        <td class="no-line text-right">{{ vat|number_format(2, '.',' ') }} {{ systemObj.DefaultCurrency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-center"><strong>{{ 'Total gross'|trans }} </strong></td>
+                                        {% set total  = sum + vat %}
+                                        <td class="no-line text-right"> {{total|number_format(2, '.',' ')}} {{ systemObj.DefaultCurrency}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

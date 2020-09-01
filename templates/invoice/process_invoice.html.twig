@@ -1,0 +1,184 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {% include 'invoice/_incl_invoice_styles.html.twig'  %}
+
+    <script>
+      
+    </script>
+    <script type = "text/javascript">
+        function delete_invoice_item(product_name) {
+            return confirm('{{ 'Are you sure to delete this product'|trans }}: ' + product_name + '?');
+        }
+
+        function load_modal(item_id) {
+
+            var product = document.getElementById("product_" + item_id).innerHTML;
+            var quantity = document.getElementById("quantity_" + item_id).innerHTML;
+            var price = document.getElementById("price_" + item_id).innerHTML;
+
+            document.getElementById("edit_product").value = product;
+            document.getElementById("edit_quantity").value = quantity;
+            document.getElementById("edit_price").value = price;
+            document.getElementById("edit_item_id").value = item_id;
+            return true;
+        }
+
+
+    </script>
+
+{% endblock %}
+{% block body %}
+     {{ parent()}}
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3>{{ 'Edit Items'|trans  }} - {{ 'Invoice'|trans  }} #{{ invoiceObj.number }}</h3>
+                            <small>{{ 'Buyer'|trans  }}: <strong>{{ invoiceObj.buyername }} </strong></br>
+                            {{ 'Buyer Tax ID'|trans  }}: {{ invoiceObj.buyerTaxID }} </small>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{ path('invoice_list') }}" class="btn btn-info" ><i class="material-icons">&#xE5C4;</i> <span>{{ 'Back'|trans  }}</span></a>
+                            <a href="#addInvoiceItemModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>{{ 'Add New Item'|trans  }}</span></a>
+
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'Product'|trans  }}</th>
+                            <th>{{ 'Quantity'|trans  }}</th>
+                            <th>{{ 'Price'|trans  }} </th>
+                            <th>{{ 'Total'|trans  }}</th>
+                            <th>{{ 'Actions'|trans  }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set sum = 0 %}
+                        {%  for invoiceItemObj in invoiceItemsObj %}
+
+                            <tr>
+                                <td>{{ loop.index}} </td>
+                                <td id="product_{{invoiceItemObj.id}}">{{ invoiceItemObj.product }}</td>
+                                <td id="quantity_{{invoiceItemObj.id}}">{{ invoiceItemObj.quantity }}</td>
+                                <td id="price_{{invoiceItemObj.id}}">{{ (invoiceItemObj.price / 100) |number_format(2, '.',' ') }}</td>
+                                <td id="total_{{invoiceItemObj.id}}">{{ (invoiceItemObj.total / 100) |number_format(2, '.',' ') }}</td>
+                                    
+                                <td>
+                                    <a href="#editInvoiceItemModal" class="edit" onclick="return load_modal('{{invoiceItemObj.id}}')" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Edit'|trans  }}">&#xE254;</i></a>
+                                    <a href="{{  path('delete_invoice_item', {'id':invoiceItemObj.id} )  }}" onclick="return delete_invoice_item('{{invoiceItemObj.product }}');"  class="delete" ><i class="material-icons" data-toggle="tooltip" title="{{ 'Delete'|trans  }}">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                             {% set sum = sum + invoiceItemObj.total / 100 %}  
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+    </div>
+
+
+    <div class="container">
+
+        <div class="row clearfix" style="margin-top:20px">
+            <div class="pull-right col-md-5">
+                <table class="table table-bordered table-hover" id="tab_logic_total">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">{{ 'Total net'|trans }}</th>
+                            <td class="text-center"><input type="number" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" readonly value="{{ sum | number_format(2, '.','') }}"/></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">{{ 'VAT Tax'|trans }}(%)</th>
+                            <td class="text-center"><div class="input-group mb-2 mb-sm-0">
+                                    <input type="number" class="form-control" id="tax" placeholder="0"readonly value="{{ systemObj.DefaultVat }}"/>
+                                    
+                                </div></td>
+                        </tr>
+                        <tr>
+                            {% set vat  = sum * systemObj.DefaultVat / 100 %}
+                            <th class="text-center">{{ 'Tax Amount'|trans }}</th>
+                            <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" readonly value = "{{ vat |number_format(2, '.','') }}"/></td>
+                        </tr>
+                        <tr>
+                            {% set total  = sum + vat %}
+                            <th class="text-center">{{ 'Total gross'|trans }}</th>
+                            <td class="text-center"><input type="number" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" readonly value="{{ total |number_format(2, '.','')}}"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal HTML -->
+    <div id="addInvoiceItemModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('add_invoice_item', {id: invoiceObj.id}) }}" method="POST">
+                    <div class="modal-header">						
+                        <h4 class="modal-title">{{ 'Add Item'|trans  }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <div class="form-group">
+                            <label>{{ 'Product'|trans  }}</label>
+                            <input type="text" class="form-control" required id="product" name="product">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Quantity'|trans  }}</label>
+                            <input type="number" class="form-control"  placeholder='0' required id="quantity" name="quantity" min = "1">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Price'|trans  }} </label>
+                            <input type="number" placeholder='0.00' step=".01" class="form-control" required  id="price" name="price" min="0.01">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="{{ 'Cancel'|trans  }}">
+                        <input type="submit" class="btn btn-success" value="{{ 'Add'|trans  }}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal HTML -->                    
+    <div id="editInvoiceItemModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path ('edit_invoice_item') }}" method="POST">
+                    <div class="modal-header">						
+                        <h4 class="modal-title">{{ 'Edit Item'|trans  }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <div class="form-group">
+                            <label>{{ 'Product'|trans  }}</label>
+                            <input type="text" class="form-control" required id="edit_product" name="edit_product">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Quantity'|trans  }}</label>
+                            <input type="number" class="form-control"  placeholder='0' required id="edit_quantity" name="edit_quantity" min="1" >
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Price'|trans  }}</label>
+                            <input type="number" placeholder='0.00' step=".01" class="form-control" required  id="edit_price" name="edit_price" min="0.01">
+                        </div>
+
+                    </div>
+                    <input type="hidden" id ="edit_item_id" name="edit_item_id" value="">
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-info" value="Save">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>                        
+{% endblock %}
