@@ -6,7 +6,7 @@
     <script type = "text/javascript">
         function delete_invoice(invoice_id) {
             var number = document.getElementById("number_" + invoice_id).innerHTML;
-            
+
             document.getElementById("delete_invoice_number").innerHTML = number;
             document.getElementById("delete_invoice_id").value = invoice_id;
             return true;
@@ -17,16 +17,20 @@
             var buyer = document.getElementById("buyer_" + invoice_id).innerHTML;
             var buyerTaxId = document.getElementById("buyertaxid_" + invoice_id).innerHTML;
             var buyerAddress = document.getElementById("buyeraddress_" + invoice_id).innerHTML;
+            var dueDate = document.getElementById("duedate_" + invoice_id).value;
 
             document.getElementById("edit_buyer").value = buyer;
             document.getElementById("edit_buyerTaxId").value = buyerTaxId;
             document.getElementById("edit_buyerAddress").value = buyerAddress;
+            document.getElementById("edit_dueDate").value = dueDate;
             document.getElementById("edit_invoice_id").value = invoice_id;
             return true;
         }
-
-
     </script>  
+
+
+
+
 {% endblock %}
 {% block body %}
     {{ parent()}}
@@ -39,14 +43,18 @@
                             <h2>{{ 'Manage Invoices'|trans  }}</h2>
                         </div>
                         <div class="col-sm-6">
-
+                            {% if app.request.locale == "pl" %}
+                                {% set localeSwith  = ''%}
+                            {% else %}
+                                {% set localeSwith  = 'pl'%}
+                            {% endif %}    
+                            <a href="{{ path("invoice_list", {'_locale': localeSwith}) }}" class="btn" data-toggle="tooltip" title="{{ 'Polski'|trans }}"> <i class="material-icons">&#xE894</i><span>{{ 'PL'|trans }}</span></a>
                             <a href="{{ path("update_system") }}" class="btn btn-info" data-toggle="tooltip" title="{{ 'Settings'|trans  }}"><i class="material-icons"  >&#xE8B8;</i><span></span></a>
                             <a href="#addInvoiceModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i><span>{{ 'Add New Invoice'|trans  }}</span></a>
                         </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
-                        {{ knp_pagination_render(invoicesObj) }}
                     <thead>
                         <tr>
                             <th>#</th>
@@ -63,7 +71,9 @@
                         {%  for invoiceObj in invoicesObj %}
 
                             <tr>
-                                <td>{{ loop.index}} </td>
+                                <td>{{ loop.index}} 
+                                    <input type="hidden" value ="{{ invoiceObj.dueDate|date("Y/m/d")}}" id="duedate_{{invoiceObj.id}}" />
+                                </td>
                                 <td id="number_{{invoiceObj.id}}">{{ invoiceObj.number }}</td>
                                 <td>{{ invoiceObj.issuedate|date("Y-m-d") }}</td>
                                 <td id="buyer_{{invoiceObj.id}}" >{{ invoiceObj.buyername }}</td>
@@ -87,15 +97,18 @@
                                 </td>
 
                                 <td>
-                                 
+
                                     <a href="#deleteInvoiceModal" class="delete" onclick="return delete_invoice('{{invoiceObj.id}}');" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="{{ 'Delete'|trans  }}">&#xE872;</i></a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                 
+
                 </table>
-                        <p id="RecordCount"> {{ 'Total Record Count'|trans }}: {{ recordCountInt }}</p>
+                <div class="clearfix">
+                    <p id="RecordCount" class="hint-text"> {{ 'Total Record Count'|trans }}: {{ recordCountInt }}</p>
+                    {{ knp_pagination_render(invoicesObj) }}
+                </div>
             </div>
         </div>    
     </div>
@@ -110,18 +123,22 @@
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
-                            <label>{{ 'Buyer'|trans  }}</label>
-                            <input type="text" class="form-control" required name="buyer">
+                            <label for="buyer">{{ 'Buyer'|trans  }}</label>
+                            <input type="text" class="form-control" required name="buyer" id="buyer">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Buyer Tax ID'|trans  }}</label>
+                            <label for ="buyerTaxId">{{ 'Buyer Tax ID'|trans  }}</label>
                             <input type="text" class="form-control" required id="buyerTaxId"  name="buyerTaxId" max="15" >
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Buyer Address'|trans  }} </label>
-                            <textarea class="form-control" required name="buyerAddress"></textarea>
+                            <label for ="buyerAddress">{{ 'Buyer Address'|trans  }} </label>
+                            <textarea class="form-control" required name="buyerAddress" id ="buyerAddress"></textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for ="dueDate">{{ 'Due Date'|trans  }}</label>
+                            {% set defaultDueDate = 'now'|date_modify("+" ~ systemObj.DefaultDueDateDays ~ " days")|date('Y/m/d') %}
+                            <input class="form-control" id="dueDate" name ="dueDate"  data-provide="datepicker" data-date-format="yyyy/mm/dd" value="{{ defaultDueDate }}" required >
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="{{ 'Cancel'|trans  }}">
@@ -142,18 +159,21 @@
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
-                            <label>{{ 'Buyer'|trans  }}</label>
+                            <label for="edit_buyer">{{ 'Buyer'|trans  }}</label>
                             <input type="text" class="form-control" required id="edit_buyer" name="edit_buyer">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Buyer Tax ID'|trans  }}</label>
+                            <label for="edit_buyerTaxId">{{ 'Buyer Tax ID'|trans  }}</label>
                             <input type="text" class="form-control" required id="edit_buyerTaxId" name="edit_buyerTaxId" max="15">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Buyer Address'|trans  }}</label>
+                            <label for="edit_buyerAddress">{{ 'Buyer Address'|trans  }}</label>
                             <textarea class="form-control" required id="edit_buyerAddress" name="edit_buyerAddress"></textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for ="edit_dueDate">{{ 'Due Date'|trans  }}</label>
+                            <input class="form-control" id="edit_dueDate" name ="edit_dueDate"  data-provide="datepicker" data-date-format="yyyy/mm/dd"  required >
+                        </div>
                     </div>
                     <input type="hidden" id ="edit_invoice_id" name="edit_invoice_id" value="">
                     <div class="modal-footer">
@@ -177,13 +197,13 @@
                     <div class="modal-body">					
                         <p>{{'Are you sure to delete this invoice'|trans  }}?</p>
                         <p id ="delete_invoice_number" name="delete_invoice_number"></p>
-                        <p class="text-warning"><small>{{ 'This action cannot be undone'|trans }}.</small></p>
+                        <p class="text-danger"><small>{{ 'This action cannot be undone'|trans }}.</small></p>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="{{ 'Cancel' | trans }}">
                         <input type="submit" class="btn btn-danger" value="{{ 'Delete' | trans }}">
                     </div>
-                      <input type="hidden" id ="delete_invoice_id" name="delete_invoice_id" value="">
+                    <input type="hidden" id ="delete_invoice_id" name="delete_invoice_id" value="">
                 </form>
             </div>
         </div>

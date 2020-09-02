@@ -17,6 +17,8 @@ class InvoicesTest extends WebTestCase {
         $form['buyer'] = $newBuyer;
         $form['buyerTaxId'] = '123-123-12-12';
         $form['buyerAddress'] = 'Lorum Lorum';
+        $tomorrowDate = new \DateTime("tomorrow");
+        $form['dueDate'] = date_format($tomorrowDate,"Y-m-d");
 
         $crawler = $client->submit($form);
         $crawler = $client->followRedirect();
@@ -28,7 +30,7 @@ class InvoicesTest extends WebTestCase {
         $crawler = $client->click($link);
 
         $pageContent = $client->getResponse()->getContent();
-        $this->assertContains("Buyer: <strong>" . $newBuyer, $pageContent);
+        $this->assertContains("Buyer: <strong>" . $newBuyer, $pageContent);  //check if newly added Buyer is referred in the loaded InvoiceItem record
     }
 
     public function testNewInvoiceItem() {
@@ -52,7 +54,7 @@ class InvoicesTest extends WebTestCase {
 
         $newItemValueFormatted = number_format($price * 2, 2, ".", " ");
 
-        $this->assertContains($newItemValueFormatted, $pageContent);
+        $this->assertContains($newItemValueFormatted, $pageContent);   //check  if randomly generated value is correctly computed.
     }
 
     public function testUpdateSystem() {
@@ -71,7 +73,7 @@ class InvoicesTest extends WebTestCase {
         $crawler = $client->click($link);
 
         $pageContent = $client->getResponse()->getContent();
-        $this->assertContains($newCompany, $pageContent);
+        $this->assertContains($newCompany, $pageContent);  //check if randomly generated Company name have been save properly
     }
 
 

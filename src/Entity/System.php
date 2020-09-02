@@ -5,11 +5,12 @@ namespace App\Entity;
 use App\Repository\SystemRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=SystemRepository::class)
  */
-class System
-{
+class System {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,89 +44,104 @@ class System
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\NotBlank(message= "Company Account cannot be blank")
      */
     private $CompanyAccount;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message= "Company Account cannot be blank")
+
+     * 
+     *     @Assert\Range(
+     *      min = 0,
+     *      max = 99,
+     *      notInRangeMessage = "Default Vat value must be between {{ min }} and {{ max }}"
+     *      )
      */
     private $DefaultVat;
 
-    public function getId(): ?int
-    {
+    /**
+     * @ORM\Column(type="integer")
+     *   @Assert\Range(
+     *      min = 1,
+     *      max = 90,
+     *      notInRangeMessage = "Number of days must be between {{ min }} and {{ max }}"
+     *      )
+     */
+    private $DefaultDueDateDays;
+
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getCompanyName(): ?string
-    {
+    public function getCompanyName(): ?string {
         return $this->CompanyName;
     }
 
-    public function setCompanyName(string $CompanyName): self
-    {
+    public function setCompanyName(string $CompanyName): self {
         $this->CompanyName = $CompanyName;
 
         return $this;
     }
 
-    public function getCompanyAddress(): ?string
-    {
+    public function getCompanyAddress(): ?string {
         return $this->CompanyAddress;
     }
 
-    public function setCompanyAddress(string $CompanyAddress): self
-    {
+    public function setCompanyAddress(string $CompanyAddress): self {
         $this->CompanyAddress = $CompanyAddress;
 
         return $this;
     }
 
-    public function getCompanyTaxID(): ?string
-    {
+    public function getCompanyTaxID(): ?string {
         return $this->CompanyTaxID;
     }
 
-    public function setCompanyTaxID(string $CompanyTaxID): self
-    {
+    public function setCompanyTaxID(string $CompanyTaxID): self {
         $this->CompanyTaxID = $CompanyTaxID;
 
         return $this;
     }
 
-    public function getDefaultCurrency(): ?string
-    {
+    public function getDefaultCurrency(): ?string {
         return $this->DefaultCurrency;
     }
 
-    public function setDefaultCurrency(string $DefaultCurrency): self
-    {
+    public function setDefaultCurrency(string $DefaultCurrency): self {
         $this->DefaultCurrency = $DefaultCurrency;
 
         return $this;
     }
 
-    public function getCompanyAccount(): ?string
-    {
+    public function getCompanyAccount(): ?string {
         return $this->CompanyAccount;
     }
 
-    public function setCompanyAccount(string $CompanyAccount): self
-    {
+    public function setCompanyAccount(string $CompanyAccount): self {
         $this->CompanyAccount = $CompanyAccount;
 
         return $this;
     }
 
-    public function getDefaultVat(): ?int
-    {
+    public function getDefaultVat(): ?int {
         return $this->DefaultVat;
     }
 
-    public function setDefaultVat(int $DefaultVat): self
-    {
+    public function setDefaultVat(int $DefaultVat): self {
         $this->DefaultVat = $DefaultVat;
 
         return $this;
     }
+
+    public function getDefaultDueDateDays(): ?int {
+        return $this->DefaultDueDateDays;
+    }
+
+    public function setDefaultDueDateDays(int $DefaultDueDateDays): self {
+        $this->DefaultDueDateDays = $DefaultDueDateDays;
+
+        return $this;
+    }
+
 }

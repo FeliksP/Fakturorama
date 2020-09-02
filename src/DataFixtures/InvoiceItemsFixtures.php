@@ -44,6 +44,7 @@ class InvoiceItemsFixtures extends Fixture implements DependentFixtureInterface 
         yield [2, 'Klawiatura', 2, 4300];
         yield [2, 'Mysz', 2, 3900];
         yield [3, 'Mysz', 6, 3900];
+        yield [3, 'Przewód HDMI', 1, 5850];
         yield [4, 'Drukarka', 2, 79200];
         yield [4, 'Windows 10', 1, 65000];
         yield [5, 'Klawiatura', 2, 4300];
@@ -57,6 +58,9 @@ class InvoiceItemsFixtures extends Fixture implements DependentFixtureInterface 
         yield [12, 'Windows 10', 1, 65000];
         yield [12, 'Drukarka', 1, 79200];
         yield [13, 'Mysz', 4, 3900];
+        yield [13, 'Przewód HDMI', 2, 5850];
+        yield [13, 'Pendriver 64GB', 5, 3000];
+        
     }
 
 }

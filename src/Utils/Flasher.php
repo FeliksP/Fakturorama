@@ -21,7 +21,7 @@ class Flasher {
     
     public function flashError ($message ) {
           
-        $this->session-> getFlashBag()->add('error', $this->translateMsg($message));
+        $this->session-> getFlashBag()->add('danger', $this->translateMsg($message));
     }
     
     

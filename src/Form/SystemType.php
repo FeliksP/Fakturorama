@@ -25,10 +25,10 @@ class SystemType extends AbstractType {
                 ->add('CompanyName', TextType::class, [
                     'label' => 'Company Name',
                 ])
-                ->add('CompanyAddress', TextareaType::class,  [
+                ->add('CompanyAddress', TextareaType::class, [
                     'label' => 'Company Address',
                 ])
-                ->add('CompanyTaxID', TextType::class,  [
+                ->add('CompanyTaxID', TextType::class, [
                     'label' => 'Company Tax ID',
                 ])
                 ->add('DefaultCurrency', ChoiceType::class,
@@ -36,11 +36,14 @@ class SystemType extends AbstractType {
                             'data' => $defaultCurrency,
                             'label' => 'Default Currency',
                 ])
-                ->add('CompanyAccount', TextType::class,  [
+                ->add('CompanyAccount', TextType::class, [
                     'label' => 'Company Account',
                 ])
-                ->add('DefaultVat', IntegerType::class,  [
+                ->add('DefaultVat', IntegerType::class, [
                     'label' => 'Default VAT',
+                ])
+                ->add('DefaultDueDateDays', IntegerType::class, [
+                    'label' => 'Default Due Date (days)',
                 ])
         ;
     }

@@ -18,18 +18,18 @@ class InvoiceController extends AbstractController {
      */
     public function invoiceList($page) {
         $entityManager = $this->getDoctrine()->getManager();
-        $repo = $entityManager->getRepository(Invoices::class);
-        // $invoicesObj = $repo->getXLatestRecords(0, 10);
-        $recordCountInt  = $repo->countAllRecords();
-        $invoicesObj = $repo->findAllPaginated($page);
+        $repoInvoice = $entityManager->getRepository(Invoices::class);
 
-        $formInvoiceObj = $this->createForm(InvoiceType::class);
+        $recordCountInt = $repoInvoice->countAllRecords();
+        $invoicesObj = $repoInvoice->findAllPaginated($page);
 
+        $repoSystem = $entityManager->getRepository(System::class);
+        $systemObj = $repoSystem->getSystemSettings();
 
         return $this->render('invoice/crud_table.html.twig', [
                     'invoicesObj' => $invoicesObj,
-                    'formInvoiceObj' => $formInvoiceObj,
                     'recordCountInt' => $recordCountInt,
+                    'systemObj' => $systemObj
         ]);
     }
 
@@ -139,10 +139,12 @@ class InvoiceController extends AbstractController {
         $buyer = $request->request->get($suffix . 'buyer');
         $buyerTaxId = $request->request->get($suffix . 'buyerTaxId');
         $buyerAddress = $request->request->get($suffix . 'buyerAddress');
+        $dueDate = $request->request->get($suffix . 'dueDate');
 
         $invoiceObj->setBuyerName(trim($buyer));
         $invoiceObj->setBuyerTaxID(trim($buyerTaxId));
         $invoiceObj->setBuyerAddress(trim($buyerAddress));
+        $invoiceObj->setDueDate(new \DateTime($dueDate));
 
         return $invoiceObj;
     }

@@ -39,7 +39,7 @@
                         <div class="col-sm-6">
                             <a href="{{ path('invoice_list') }}" class="btn btn-info" ><i class="material-icons">&#xE5C4;</i> <span>{{ 'Back'|trans  }}</span></a>
                             <a href="#addInvoiceItemModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>{{ 'Add New Item'|trans  }}</span></a>
-
+                           
                         </div>
                     </div>
                 </div>
@@ -122,15 +122,15 @@
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
-                            <label>{{ 'Product'|trans  }}</label>
+                            <label for="product">{{ 'Product'|trans  }}</label>
                             <input type="text" class="form-control" required id="product" name="product">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Quantity'|trans  }}</label>
+                            <label for="quantity">{{ 'Quantity'|trans  }}</label>
                             <input type="number" class="form-control"  placeholder='0' required id="quantity" name="quantity" min = "1">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Price'|trans  }} </label>
+                            <label for="price">{{ 'Price'|trans  }} </label>
                             <input type="number" placeholder='0.00' step=".01" class="form-control" required  id="price" name="price" min="0.01">
                         </div>
 
@@ -155,23 +155,23 @@
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
-                            <label>{{ 'Product'|trans  }}</label>
+                            <label for="edit_product">{{ 'Product'|trans  }}</label>
                             <input type="text" class="form-control" required id="edit_product" name="edit_product">
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Quantity'|trans  }}</label>
+                            <label for="edit_quantity">{{ 'Quantity'|trans  }}</label>
                             <input type="number" class="form-control"  placeholder='0' required id="edit_quantity" name="edit_quantity" min="1" >
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Price'|trans  }}</label>
+                            <label for="edit_price">{{ 'Price'|trans  }}</label>
                             <input type="number" placeholder='0.00' step=".01" class="form-control" required  id="edit_price" name="edit_price" min="0.01">
                         </div>
 
                     </div>
                     <input type="hidden" id ="edit_item_id" name="edit_item_id" value="">
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info" value="Save">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="{{ 'Cancel'|trans }}">
+                        <input type="submit" class="btn btn-info" value="{{ 'Save' | trans}}">
                     </div>
 
                 </form>

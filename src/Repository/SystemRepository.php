@@ -21,7 +21,7 @@ class SystemRepository extends ServiceEntityRepository
     
     public function getSystemSettings() {
       $systemObj =  $this->findAll();         //there is only one record in System database
-      return $systemObj[0];
+      return $systemObj[0];                   //so return first one found
     }
 
     

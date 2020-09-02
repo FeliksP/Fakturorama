@@ -28,12 +28,10 @@ class SystemController extends AbstractController {
              $entityManager->persist($systemObj);
              $entityManager->flush();
                 
-            $flasher->flashSuccess('Changes have been saved!');
+            $flasher->flashSuccess('Changes have been saved.');
                      
            return $this->redirectToRoute("invoice_list");
         }
-
-        
 
         return $this->render('system/system_settings.html.twig', [
                     'systemObj' => $systemObj,

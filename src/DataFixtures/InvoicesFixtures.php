@@ -21,7 +21,10 @@ class InvoicesFixtures extends Fixture {
             $invoiceObj->setBuyerName($buyerName);
             $invoiceObj->setBuyerTaxId($buyerTaxId);
             $invoiceObj->setBuyerAddress($buyerAddress);
-
+            
+            $dueDateStr = date('Y-m-d', strtotime($invoiceDate. ' +14 days')); //sets dummy Due Date 14 days from issue date
+          
+            $invoiceObj->setDueDate(new \DateTime($dueDateStr));
             $manager->persist($invoiceObj);
         }
 

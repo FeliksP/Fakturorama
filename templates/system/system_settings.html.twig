@@ -1,11 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
- {% include '_includes/invoice_styles.html.twig'  %}
+    {% include '_includes/invoice_styles.html.twig'  %}
 {% endblock %}
 
 {% block body %}
-       {{ parent()}}
+    {{ parent()}}
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
@@ -18,8 +18,6 @@
                     </div>
                 </div>
 
-
-
                 {{ form_start(formObj,{'attr': {
                                                 'class' : '',
                                                 }
@@ -30,7 +28,7 @@
                                                 'class' : "form-control",
                                                 }
                                               }) }}
-                    <div class="form-error"> {{ form_errors(formObj.CompanyName) }}</div>
+                    <div class="text-danger"> {{ form_errors(formObj.CompanyName) }}</div>
                 </div>
                 <div class="form-group col-sm-6">
                     {{ form_label(formObj.CompanyAddress)}}
@@ -38,54 +36,63 @@
                                                 'class' : "form-control",
                                                 }
                                               }) }}
-                    <div class="form-error"> {{ form_errors(formObj.CompanyAddress) }}</div>
+                    <div class="text-danger"> {{ form_errors(formObj.CompanyAddress) }}</div>
                 </div>
-                <div class="form-group col-sm-3">
-                    {{ form_label(formObj.CompanyTaxID)}}
-                    {{ form_widget(formObj.CompanyTaxID,{'attr': {
+                    <div class="form-group col-sm-3">
+                        {{ form_label(formObj.CompanyTaxID)}}
+                        {{ form_widget(formObj.CompanyTaxID,{'attr': {
                                                 'class' : "form-control",
                                                 }
                                               }) }}
-                    <div class="form-error"> {{ form_errors(formObj.CompanyTaxID) }}</div>
+                        <div class="text-danger"> {{ form_errors(formObj.CompanyTaxID) }}</div>
+                    </div>
+
+                    <div class="form-group col-sm-2">
+                        {{ form_label(formObj.DefaultCurrency)}}
+                        {{ form_widget(formObj.DefaultCurrency,{'attr': {
+                                                'class' : "form-control",
+                                                }
+                                              }) }}
+                        <div class="text-danger"> {{ form_errors(formObj.DefaultCurrency) }}</div>
+                    </div>       
+
+                    <div class="form-group col-sm-4">
+                        {{ form_label(formObj.CompanyAccount)}}
+                        {{ form_widget(formObj.CompanyAccount,{'attr': {
+                                                'class' : "form-control",
+                                                }
+                                              }) }}
+                        <div class="text-danger"> {{ form_errors(formObj.CompanyAccount) }}</div>
+                    </div>     
+
+                    <div class="form-group col-sm-4">
+                        {{ form_label(formObj.DefaultVat)}}
+                        {{ form_widget(formObj.DefaultVat,{'attr': {
+                                                'class' : "form-control",
+                                                'min' : 0,
+                                                'max' : 99
+                                                }
+                                              }) }}
+                        <div class="text-danger"> {{ form_errors(formObj.DefaultVat  ) }}</div>
+                    </div> 
+                    <div class="form-group col-sm-4">
+                        {{ form_label(formObj.DefaultDueDateDays)}}
+                        {{ form_widget(formObj.DefaultDueDateDays,{'attr': {
+                                                'class' : "form-control",
+                                                'min' : 1,
+                                                'max' : 90
+                                                }
+                                              }) }}
+                        <div class="text-danger"> {{ form_errors(formObj.DefaultDueDateDays  ) }}</div>
+                    </div> 
+                    <div class="footer">
+                        <a href="{{ path("invoice_list") }}" />  <input type="button" class="btn btn-default" value="{{ 'Cancel'|trans }}"></a>
+                        <input type="submit" class="btn btn-info" value="{{ 'Save'|trans }}">
+                    </div>
+                    {{ form_end(formObj) }}
+
+
                 </div>
-
-                <div class="form-group col-sm-2">
-                    {{ form_label(formObj.DefaultCurrency)}}
-                    {{ form_widget(formObj.DefaultCurrency,{'attr': {
-                                                'class' : "form-control",
-                                                }
-                                              }) }}
-                    <div class="form-error"> {{ form_errors(formObj.DefaultCurrency) }}</div>
-                </div>       
-
-                <div class="form-group col-sm-4">
-                    {{ form_label(formObj.CompanyAccount)}}
-                    {{ form_widget(formObj.CompanyAccount,{'attr': {
-                                                'class' : "form-control",
-                                                }
-                                              }) }}
-                    <div class="form-error"> {{ form_errors(formObj.CompanyAccount) }}</div>
-                </div>     
-
-                <div class="form-group col-sm-2">
-                    {{ form_label(formObj.DefaultVat)}}
-                    {{ form_widget(formObj.DefaultVat,{'attr': {
-                                                'class' : "form-control",
-                                                }
-                                              }) }}
-                    <div class="form-error"> {{ form_errors(formObj.DefaultVat  ) }}</div>
-                </div> 
-                <div class="footer">
-                    <a href="{{ path("invoice_list") }}" />  <input type="button" class="btn btn-default" value="{{ 'Cancel'|trans }}"></a>
-                    <input type="submit" class="btn btn-info" value="{{ 'Save'|trans }}">
-                </div>
-                {{ form_end(formObj) }}
-
-
-            </div>
-        </div>        
-    </div>
-
-
-
-{% endblock %}
+            </div>        
+        </div>
+    {% endblock %}

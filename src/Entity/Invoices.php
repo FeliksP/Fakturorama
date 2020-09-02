@@ -64,6 +64,11 @@ class Invoices {
      */
     private $Item;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $DueDate;
+
     public function __construct() {
         $this->Item = new ArrayCollection();
     }
@@ -135,36 +140,46 @@ class Invoices {
     /**
      * @ORM\PrePersist()
      */
-    public function prePersist(LifecycleEventArgs $event) {
+    public function prePersist(LifecycleEventArgs $event) {  // run for new objects
         $nowObj = new \DateTime();
         $this->setCreatedAt($nowObj);
-        if ($this->getIssueDate() == null) { // for load fixture purposes
+        
+        if ($this->getIssueDate() == null) { // for loading fixture purpose only
             $this->setIssueDate($nowObj);
         }
         $entityManager = $event->getEntityManager();
-        if ($this->getNumber() == null) { // for load fixture purposes
+        if ($this->getNumber() == null) { // for loading fixture purpose only
             $this->setNumber($this->getNewInvoiceNumber($entityManager));
         }
     }
 
     private function getNewInvoiceNumber($entityManager): string {
-
+        /* invoice number is auto-generated based on "YYYY/NNNN" format
+         * where YYYY is current year and NNNN is running number
+         * NNNN is computed based on the last number in the database + 1
+        */
         $repo = $entityManager->getRepository(Invoices::class);
         $lastNumberInvoiceObj = $repo->getXLatestRecords(0, 1);
         $thisYear = date("Y");
+        $isFirstInvoceOfTheYear = false;
 
-        if (empty($lastNumberInvoiceObj)) { // in that case add a new record
-            $newNumberStr = $thisYear . '/0001';
+        if (empty($lastNumberInvoiceObj)) { // no data in the database -  in that case use 0001 of the current year
+            $isFirstInvoceOfTheYear = true;
         } else {
             $lastNumber = $lastNumberInvoiceObj[0]->getNumber();
             $lastNumberArr = explode("/", $lastNumber);
             if ($lastNumberArr[0] == $thisYear) {
-                $runningNumberStr = ltrim($lastNumberArr[1], '0') + 1;  //assign next number
-                $newNumberStr = $thisYear . '/' . str_pad($runningNumberStr, 4, '0', STR_PAD_LEFT);
-            } else {
-                $newNumberStr = $thisYear . '/0001';        //first invoice of the year
+                $runningNumberStr = ltrim($lastNumberArr[1], '0') + 1;  //this is for the same year then assign a next number 
+                $newNumberStr = $thisYear . '/' . str_pad($runningNumberStr, 4, '0', STR_PAD_LEFT); // make 4 digit numbe by padding 0 
+            } else {//first invoice of the year
+                $isFirstInvoceOfTheYear = true;
+       
             }
         }
+        if($isFirstInvoceOfTheYear) {
+            $newNumberStr = $thisYear . '/0001';
+        }
+        
         return $newNumberStr;
     }
 
@@ -192,6 +207,18 @@ class Invoices {
                 $item->setInvoiceId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDueDate(): ?\DateTimeInterface
+    {
+        return $this->DueDate;
+    }
+
+    public function setDueDate(\DateTimeInterface $DueDate): self
+    {
+        $this->DueDate = $DueDate;
 
         return $this;
     }

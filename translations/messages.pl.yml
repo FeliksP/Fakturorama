@@ -4,11 +4,12 @@ Issue Date: Data wystawienia
 Buyer: Nabywca
 Buyer Tax ID: Numer NIP
 Buyer Address : Adres kontrahenta
+Due Date: Termin płatności
 Actions : Funkcje
 Add New Invoice : Dodaj nową fakturę
 Settings : Ustawienia
 Add Invoice : Dodaj fakturę
-Delete Invoice : Skasuj fakturę
+Delete Invoice : Usuń fakturę
 Cancel : Anuluj
 Save : Zapisz
 Add : Dodaj
@@ -18,9 +19,11 @@ Print: Drukuj
 Value: Wartość
 Total Record Count : Całkowita liczba faktur
 Are you sure to delete this invoice : Czy na pewno usunąć fakturę o tym numerze
-This action cannot be undone : Nie ma możliwości odwrócenie tej akcji.
+This action cannot be undone : Nie ma możliwości cofnięcia tej akcji
 Process : Przetwarzaj
 Edit Invoice : Edycja faktury
+Polski : English
+PL : EN
 #items
 Edit Items : Edytuj pozycje
 Add New Item : Dodaj pozycję
@@ -51,14 +54,15 @@ Company Tax ID : NIP firmy
 Default Currency : Domyślna waluta
 Company Account : Numer konta
 Default VAT : Domyślna stawka VAT
+Default Due Date (days) : Domyślny termin płatności (liczba dni)
 #messages
 New invoice recorded. : Nowa faktura została zarejestrowana.
 New invoice item recorded. : Nowa pozycja została zarejestrowana.
-Changes have been saved! : Zmiany zostały zachowane!
+Changes have been saved. : Zmiany zostały zapisane.
 Item updated. : Pozycja została zaktualizowna.
 Invoice data updated. : Dane faktury zostały zaktualizowane.
-Invoice deleted : Faktura została skasowana.
-Invoice item deleted : Pozycja została skasowana.
+Invoice deleted : Faktura została usunięta.
+Invoice item deleted : Pozycja została usunięta.
 
 #errors
 Name cannot be blank : Nazwa nie może być pusta
@@ -66,6 +70,8 @@ Address cannot be blank : Pole Adres nie może być puste
 Tax ID cannot be blank : Pole NIP nie może być puste
 Default Currency cannot be blank : Waluta nie może być pusta
 Company Account cannot be blank : Pole NIP nie może być puste
+Default Vat value must be between {{ min }} and {{ max }} : Domyślna wartość VAT powinna mieścić się w przedziale od {{ min }} do {{ max }}
+Number of days must be between {{ min }} and {{ max }} : Liczba dni powinna mieścić się w przedziale od {{ min }} do {{ max }}
 Non-numeric values provided when numeric expected! : Wprowadzono nie numeryczne wartości!
 Failed to update the invoice item! : Błąd w aktalizacji pozycji faktury!
-Failed to delete the invoice! : Błąd - faktura nie została skasowana!
+Failed to delete the invoice! : Błąd - faktura nie została usunięta!
