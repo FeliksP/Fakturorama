@@ -35,7 +35,8 @@
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/yaml": "*",
-        "twig/intl-extra": "^3.0"
+        "twig/intl-extra": "^3.0",
+        "symfony/http-kernel": "5.1.5"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.3",
